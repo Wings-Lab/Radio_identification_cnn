@@ -44,15 +44,16 @@ else:
 
 	flatten = Flatten()(maxpool_1)
 	dropout = Dropout(drop)(flatten)
-	output = Dense(units=636, activation='softmax')(dropout)
+	connected_1 = Dense(units=256, activation='relu')(dropout)
+	output = Dense(units=4, activation='softmax')(connected_1)
 
 	# this creates a model that includes
 	model = Model(inputs=inputs, outputs=output)
 	adam = Adam(lr=1e-4, beta_1=0.9, beta_2=0.999, epsilon=1e-08)
-
+	print model.summary()
 	model.compile(optimizer=adam, loss='binary_crossentropy', metrics=['accuracy'])
 
-	model.fit(X_train.T, y_train.T, batch_size=batch_size, epochs=nb_epoch, verbose=1, validation_data=(X_test.T, y_test.T))  # starts training
+	model.fit(X_train.T, y_train.T, batch_size=batch_size, epochs=nb_epoch, verbose=1, validation_data=(X_test, y_test))  # starts training
 	model.save(saved_weights)
 
 results = model.predict(X_test, verbose=1)
