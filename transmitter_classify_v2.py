@@ -3,7 +3,7 @@ from sklearn.model_selection import train_test_split
 from keras.utils import np_utils
 from keras.layers.core import Reshape, Flatten
 from keras.layers.convolutional import Conv2D
-from data import load_data
+from data_v2 import load_data
 from keras.optimizers import Adam
 from keras.models import Model, Sequential
 from keras.models import load_model
