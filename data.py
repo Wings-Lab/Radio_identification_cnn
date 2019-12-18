@@ -62,19 +62,12 @@ def load_data_and_labels():
     return [documents, labels]
 
 def build_input_data(documents, labels):
-    """
-    Maps documents and labels to vectors based on a vocabulary.
-    """
     x = np.array(documents)
     y = np.array(labels)
 
     return [x, y]
 
 def load_data():
-    """
-    Loads and preprocessed data for the dataset.
-    Returns input vectors, labels, vocabulary, and inverse vocabulary.
-    """
     # Load and preprocess data
     documents, labels = load_data_and_labels()
     x, y = build_input_data(documents, labels)
