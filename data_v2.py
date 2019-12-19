@@ -1,92 +1,43 @@
 import numpy as np
 import re
 import itertools
-import os
+import os, glob
 
 def load_data_and_labels():
     # Load data from files
+
     t1, t2, t3, t4 = [], [], [], []
     transmitter_1, transmitter_2, transmitter_3, transmitter_4 = [], [], [], []
+    num_f = 1
 
-    with open("converted1.txt") as d:
-            l_temp = d.read().split("\n")
-            for pair in l_temp:
-                l_temp_1 = pair.split(" ")
-                t = []
-                for num in l_temp_1:
-                    if num != '':
-                        t.append(int(num))
-                if t != []:
-                    t1.append(t)
-            i = 0
-            temp_list = []
-            while i < len(t1):
-                temp_list += t1[i]
-                i += 1
-                if i % 128 == 0 or i == len(t1):
-                    temp_list = np.reshape(temp_list, (-1, 2))
-                    transmitter_1.append(temp_list)
-                    temp_list = []
-
-    with open("converted2.txt") as d:
-            l_temp = d.read().split("\n")
-            for pair in l_temp:
-                l_temp_1 = pair.split(" ")
-                t = []
-                for num in l_temp_1:
-                    if num != '':
-                        t.append(int(num))
-                if t != []:
-                    t2.append(t)
-            i = 0
-            temp_list = []
-            while i < len(t2):
-                temp_list += t2[i]
-                i += 1
-                if i % 128 == 0 or i == len(t2):
-                    temp_list = np.reshape(temp_list, (-1, 2))
-                    transmitter_2.append(temp_list)
-                    temp_list = []
-
-    with open("converted3.txt") as d:
-            l_temp = d.read().split("\n")
-            for pair in l_temp:
-                l_temp_1 = pair.split(" ")
-                t = []
-                for num in l_temp_1:
-                    if num != '':
-                        t.append(int(num))
-                if t != []:
-                    t3.append(t)
-            i = 0
-            temp_list = []
-            while i < len(t3):
-                temp_list += t3[i]
-                i += 1
-                if i % 128 == 0 or i == len(t3):
-                    temp_list = np.reshape(temp_list, (-1, 2))
-                    transmitter_3.append(temp_list)
-                    temp_list = []
-
-    with open("converted4.txt") as d:
-            l_temp = d.read().split("\n")
-            for pair in l_temp:
-                l_temp_1 = pair.split(" ")
-                t = []
-                for num in l_temp_1:
-                    if num != '':
-                        t.append(int(num))
-                if t != []:
-                    t4.append(t)
-            i = 0
-            temp_list = []
-            while i < len(t4):
-                temp_list += t4[i]
-                i += 1
-                if i % 128 == 0 or i == len(t4):
-                    temp_list = np.reshape(temp_list, (-1, 2))
-                    transmitter_4.append(temp_list)
-                    temp_list = []
+    for file in glob.glob("*.txt"):
+        with open(file) as d:
+                l_temp = d.read().split("\n")
+                for pair in l_temp:
+                    l_temp_1 = pair.split(" ")
+                    t = []
+                    for num in l_temp_1:
+                        if num != '':
+                            t.append(int(num))
+                    if t != []:
+                        t1.append(t)
+                i = 0
+                temp_list = []
+                while i < len(t1):
+                    temp_list += t1[i]
+                    i += 1
+                    if i % 128 == 0 or i == len(t1):
+                        temp_list = np.reshape(temp_list, (-1, 2))
+                        if num_f == 1:
+                            transmitter_1.append(temp_list)
+                        elif num_f == 2:
+                            transmitter_2.append(temp_list)
+                        elif num_f == 3:
+                            transmitter_3.append(temp_list)
+                        elif num_f == 4:
+                            transmitter_4.append(temp_list)
+                        temp_list = []
+        num_f += 1
 
     t1_labels = [[1, 0, 0, 0] for _ in transmitter_1]
     t2_labels = [[0, 1, 0, 0] for _ in transmitter_2]
