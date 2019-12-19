@@ -26,7 +26,7 @@ else:
 	print("Trained weights not found. Training the network")
 	num_filters = 50
 	drop = 0.5
-	nb_epoch = 1
+	nb_epoch = 15
 
 	#data preprocess, Reshape
 	X_train = X_train.reshape(len(X_train), 2, 128, 1)
